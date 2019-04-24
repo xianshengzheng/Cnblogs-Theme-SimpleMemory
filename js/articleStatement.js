@@ -83,7 +83,7 @@ $(document).ready(function(){
     // } else {
     //     bottom_html += '<span style="font-weight: bold; white-space:nowrap;">版权声明</span>：署名 - 非商业性使用 - 禁止演绎，<a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" alt="协议普通文本" title="协议普通文本" target="_blank">协议普通文本</a> | <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode" alt="协议法律文本" title="协议法律文本" target="_blank">协议法律文本</a>。';
     // }
-    bottom_html += '<br>';
+    // bottom_html += '<br>';
     if (window.cnblogsConfig.essaySuffix.supportHtml != "") {
         bottom_html += '<span style="font-weight: bold; white-space:nowrap;">鼓励博主</span>：'+window.cnblogsConfig.essaySuffix.supportHtml;
     } else {
