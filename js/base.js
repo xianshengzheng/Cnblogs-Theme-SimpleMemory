@@ -6,19 +6,19 @@
  **/
 function Base() {
 
-    var caihuaJs     = this
-        ,tools       = new myTools
-        ,progressBar = new ToProgress(window.cnblogsConfig.progressBar, '#bottomProgressBar') // 进度条
-        ,temScroll   = 0  // 上一次页面滚动位置
+    var caihuaJs = this
+        , tools = new myTools
+        , progressBar = new ToProgress(window.cnblogsConfig.progressBar, '#bottomProgressBar') // 进度条
+        , temScroll = 0  // 上一次页面滚动位置
 
         /** 定时器 **/
-        ,timeIds    = {
-            setMenuDataTId         : null, // 菜单设置数据定时器ID
-            setHomeRightMenuTId    : null, // 主页右下角菜单设置定时器ID
-            setNotHomeRightMenuTId : null, // 非主页右下角菜单设置定时器ID
-            setCnzzTId             : null, // 网站统计Cnzz设置定时器ID
-            setAmazingTId          : null, // 网站统计Amazing设置定时器ID
-            setCatalogTId          : null, // 文章目录设置定时器ID
+        , timeIds = {
+            setMenuDataTId: null, // 菜单设置数据定时器ID
+            setHomeRightMenuTId: null, // 主页右下角菜单设置定时器ID
+            setNotHomeRightMenuTId: null, // 非主页右下角菜单设置定时器ID
+            setCnzzTId: null, // 网站统计Cnzz设置定时器ID
+            setAmazingTId: null, // 网站统计Amazing设置定时器ID
+            setCatalogTId: null, // 文章目录设置定时器ID
         }
     ;
 
@@ -46,10 +46,10 @@ function Base() {
         $('#homeTopTitle').text(window.cnblogsConfig.blogUser);
 
         // 设置菜单个人简介头像
-        $('#menuBlogAvatar').append("<img src='"+window.cnblogsConfig.blogAvatar+"'>");
+        $('#menuBlogAvatar').append("<img src='" + window.cnblogsConfig.blogAvatar + "'>");
 
         // 背景动画
-		if (window.cnblogsConfig.isBackgroundAnimation) require(['RibbonsEffect']);
+        if (window.cnblogsConfig.isBackgroundAnimation) require(['RibbonsEffect']);
 
         // 页面初始化
         ($('#topics').length > 0) ? caihuaJs.notHomeInit() : caihuaJs.homeInit();
@@ -61,20 +61,24 @@ function Base() {
     this.loadingAfterInit = function () {
 
         // 初始化菜单滚动条样式
-        $('#menuWrap').optiscroll({ forceScrollbars: true, maxTrackSize: 20, preventParentScroll: true });
+        $('#menuWrap').optiscroll({forceScrollbars: true, maxTrackSize: 20, preventParentScroll: true});
 
         // 音乐播放器初始化
         caihuaJs.musicInit();
 
         // 滚动监听
-        $(window).scroll( function() { caihuaJs.scrollMonitor(); });
+        $(window).scroll(function () {
+            caihuaJs.scrollMonitor();
+        });
 
         // 窗口变化监听
-        $(window).resize( function() { caihuaJs.resizeMonitor(); });
+        $(window).resize(function () {
+            caihuaJs.resizeMonitor();
+        });
 
         // 更换网站图标
-        var linkObject  = document.createElement('link');
-        linkObject.rel  = "shortcut icon";
+        var linkObject = document.createElement('link');
+        linkObject.rel = "shortcut icon";
         linkObject.href = window.cnblogsConfig.webpageIcon;
         document.getElementsByTagName("head")[0].appendChild(linkObject);
 
@@ -82,7 +86,7 @@ function Base() {
         caihuaJs.addFooter();
 
         // 设置菜单侧边栏内容
-        timeIds.setMenuDataTId = window.setInterval( caihuaJs.setMenuData, 1000 );
+        timeIds.setMenuDataTId = window.setInterval(caihuaJs.setMenuData, 1000);
 
         // html5-title
         caihuaJs.htmlTitle();
@@ -126,7 +130,7 @@ function Base() {
     /**
      * HTML-TITLE
      */
-    this.htmlTitle = function() {
+    this.htmlTitle = function () {
         var RelTitle = document.title;
         var hidden,
             visibilityChange,
@@ -147,7 +151,7 @@ function Base() {
             if (timer) clearTimeout(timer);
             if (document[hidden]) {
                 timer = setTimeout(function () {
-                     document.title = window.cnblogsConfig.webpageTitleOnblur + ' - ' + RelTitle.split(' - ')[0];
+                    document.title = window.cnblogsConfig.webpageTitleOnblur + ' - ' + RelTitle.split(' - ')[0];
                 }, window.cnblogsConfig.webpageTitleOnblurTimeOut);
             } else {
                 document.title = window.cnblogsConfig.webpageTitleFocus;
@@ -156,6 +160,7 @@ function Base() {
                 }, window.cnblogsConfig.webpageTitleFocusTimeOut);
             }
         }
+
         if (typeof document.addEventListener !== "undefined" || typeof document[hidden] !== "undefined") {
             document.addEventListener(visibilityChange, handleVisibilityChange, false);
         }
@@ -164,43 +169,46 @@ function Base() {
     /**
      * 主页初始化
      */
-    this.homeInit = function() {
+    this.homeInit = function () {
 
         // 设置主页图片
-        $('.main-header').css('background', '#222 url('+window.cnblogsConfig.homeTopImg+')  center center no-repeat').css('background-size', 'cover');
+        $('.main-header').css('background', '#222 url(' + window.cnblogsConfig.homeTopImg + ')  center center no-repeat').css('background-size', 'cover');
 
 
         // 头图点击滚动到内容位置
-        $('.scroll-down').click(function () { var endScroll = $('#home').offset().top + 10; tools.actScroll(endScroll, 1000);});
+        $('.scroll-down').click(function () {
+            var endScroll = $('#home').offset().top + 10;
+            tools.actScroll(endScroll, 1000);
+        });
 
         // 设置右下角菜单
-        timeIds.setHomeRightMenuTId = window.setInterval( caihuaJs.addHomeRightMenu, 1000 );
+        timeIds.setHomeRightMenuTId = window.setInterval(caihuaJs.addHomeRightMenu, 1000);
 
         caihuaJs.setHitokoto();
         caihuaJs.scrollMonitor();
 
         if (window.cnblogsConfig.isHomeTopAnimation)
-            require(['circleMagic'], function() {
+            require(['circleMagic'], function () {
                 $('.main-header').circleMagic(window.cnblogsConfig.homeTopAnimation);
-        });
+            });
     };
 
     /**
      * 非主页初始化
      */
-    this.notHomeInit = function() {
+    this.notHomeInit = function () {
 
         // 设置随笔标题
         var sbTitle = $('#cb_post_title_url').text();
-        $('.main-header-content').append('<h1 class="sb-title">'+sbTitle+'</h1>');
+        $('.main-header-content').append('<h1 class="sb-title">' + sbTitle + '</h1>');
         $('.inner').css('max-width', '100vw');
 
         caihuaJs.setDomHomePosition();
 
-        require(['baguetteBox', 'marvin', 'articleStatement'], function(baguetteBox) {
+        require(['baguetteBox', 'marvin', 'articleStatement'], function (baguetteBox) {
 
             // 设置图片点击查看
-            var cpb     = $('#cnblogs_post_body');
+            var cpb = $('#cnblogs_post_body');
             var imgList = $('#cnblogs_post_body img');
 
             if (cpb.length > 0 && imgList.length > 0) {
@@ -208,20 +216,20 @@ function Base() {
                     var tem = $(imgList[i]);
                     var flg = tem.attr('id');
                     if (typeof flg == 'undefined' && tem.outerWidth() > 50) {
-                        tem.wrap("<a class='lightbox' href='"+tem.attr('src')+"'></a>");
+                        tem.wrap("<a class='lightbox' href='" + tem.attr('src') + "'></a>");
                     }
                 });
                 baguetteBox.run('.lightbox');
             }
 
             // 初始化文章目录位置
-            timeIds.setCatalogTId = window.setInterval( caihuaJs.initCatalog, 1000 );
+            timeIds.setCatalogTId = window.setInterval(caihuaJs.initCatalog, 1000);
 
             caihuaJs.scrollMonitor();
         });
 
         // 设置右下角菜单
-        timeIds.setNotHomeRightMenuTId = window.setInterval( caihuaJs.addNotHomeRightMenu, 1000 );
+        timeIds.setNotHomeRightMenuTId = window.setInterval(caihuaJs.addNotHomeRightMenu, 1000);
 
         caihuaJs.setNotHomeTopImg();
         caihuaJs.setCommentStyle();
@@ -230,10 +238,10 @@ function Base() {
     /**
      * 初始化文章目录插件位置
      */
-    this.initCatalog = function() {
+    this.initCatalog = function () {
         var sideToolbar = $('#sideToolbar');
         if (sideToolbar.length > 0) {
-            var sideToolbarTop   = $('.main-header').outerHeight();
+            var sideToolbarTop = $('.main-header').outerHeight();
             sideToolbar.css('top', (sideToolbarTop + 20) + 'px');
             caihuaJs.resizeMonitor();
             sideToolbar.fadeIn(300);
@@ -244,7 +252,7 @@ function Base() {
     /**
      * 设置主页标语
      */
-    this.setHitokoto = function() {
+    this.setHitokoto = function () {
 
         if (window.cnblogsConfig.homeBannerText != "") {
             $('#hitokoto').text(window.cnblogsConfig.homeBannerText).css('display', '-webkit-box');
@@ -291,7 +299,7 @@ function Base() {
         $.ajax(settings).done(function (response) {
             if (response.ResultCode == 1) {
                 $('#hitokoto').text(response.Body.word).css('display', '-webkit-box');
-                $('#hitokotoAuthor').text('- '+response.Body.word_from).show();
+                $('#hitokotoAuthor').text('- ' + response.Body.word_from).show();
             } else {
                 var listIndex = tools.randomNum(0, topTitleList.length - 1);
                 $('#hitokoto').text(topTitleList[listIndex]).css('display', '-webkit-box');
@@ -304,9 +312,9 @@ function Base() {
     /**
      * 设置非主页头图
      */
-    this.setNotHomeTopImg = function() {
+    this.setNotHomeTopImg = function () {
         $('.main-header').css('height', '40vh')
-            .css('background', '#222 url('+window.cnblogsConfig.essayTopImg+')  center center no-repeat')
+            .css('background', '#222 url(' + window.cnblogsConfig.essayTopImg + ')  center center no-repeat')
             .css('background-size', 'cover');
         $('#homeTopTitle').hide();
         $('.scroll-down').hide();
@@ -314,10 +322,10 @@ function Base() {
         $('#cb_post_title_url').addClass('post-del-title');
 
         if (window.cnblogsConfig.isEssayTopAnimation)
-            require(['TweenMax', 'MyTween'], function() {
-            initCanvas('notHomeTopCanvas');
-            start();
-        });
+            require(['TweenMax', 'MyTween'], function () {
+                initCanvas('notHomeTopCanvas');
+                start();
+            });
     };
 
     /**
@@ -343,12 +351,12 @@ function Base() {
             $('#pageAnimationOffOn').click(function () {
                 if ($(this).attr('data') == 'off') {
                     $('body').find('canvas').hide();
-                    $('#pageAnimationOffOnIcon').rotate({animateTo:-360});
+                    $('#pageAnimationOffOnIcon').rotate({animateTo: -360});
                     $('#pageAnimationOffOnText').text("打开页面特效");
                     $(this).attr('data', 'on');
                 } else {
                     $('body').find('canvas').show();
-                    $('#pageAnimationOffOnIcon').rotate({animateTo:360});
+                    $('#pageAnimationOffOnIcon').rotate({animateTo: 360});
                     $('#pageAnimationOffOnText').text("关闭页面特效");
                     $(this).attr('data', 'off');
                 }
@@ -359,18 +367,18 @@ function Base() {
     /**
      * 设置评论框样式
      */
-    this.setCommentStyle = function() {
+    this.setCommentStyle = function () {
 
-        var commentAvatar = function(commentList) {
+        var commentAvatar = function (commentList) {
             commentList.each(function (i) {
                 var p = $(commentList[i]).attr('id').split('_');
                 if (p.length > 0) {
                     var idIndex = p.length - 1;
                     var id = p[idIndex];
-                    var op = $('#comment_'+id+'_avatar');
+                    var op = $('#comment_' + id + '_avatar');
                     if (op.length > 0 && op.text() != '') {
                         var patch = op.text();
-                        var html = '<img class="comment-avatar" src="'+patch+'"/>';
+                        var html = '<img class="comment-avatar" src="' + patch + '"/>';
                     } else {
                         var html = '<img class="comment-avatar" src="https://files.cnblogs.com/files/icaihua/no_avatar.gif"/>';
                     }
@@ -384,7 +392,13 @@ function Base() {
         commentList.addClass('hvr-bob');
 
         //气泡效果
-        var commentTime = setInterval(function(){if($("#comments_pager_bottom").length>0){CommentBubble();clearTimeout(commentTime);}},50);
+        var commentTime = setInterval(function () {
+            if ($("#comments_pager_bottom").length > 0) {
+                CommentBubble();
+                clearTimeout(commentTime);
+            }
+        }, 50);
+
         function CommentBubble() {
             var w1 = '<div class="list">' +
                 '<table class="out" border="0" cellspacing="0" cellpadding="0"> ' +
@@ -403,7 +417,7 @@ function Base() {
                 '</table> ' +
                 '</div>';
 
-            $.each($(".blog_comment_body"), function(i, t) {
+            $.each($(".blog_comment_body"), function (i, t) {
                 $(t).html(w1 + $(t).html() + w2);
             });
             $(".louzhu").closest(".feedbackItem").find(".out").removeClass("out").addClass("inc");
@@ -413,12 +427,13 @@ function Base() {
     /**
      * 播放器初始化
      */
-    this.musicInit = function() {};
+    this.musicInit = function () {
+    };
 
     /**
      * 结束Loading页面
      */
-    this.endLoading = function() {
+    this.endLoading = function () {
         $('body').css('overflow', 'auto');
         pageLoading.spinner.setComplete();
         $('#loading').fadeOut(300);
@@ -427,17 +442,17 @@ function Base() {
     /**
      * 滚动处理
      */
-    this.scrollMonitor = function() {
+    this.scrollMonitor = function () {
 
-        var homeScroll     = $('#home').offset().top - 40,
-            docScroll      = $(document).scrollTop(),
-            openButton     = $('#open-button'),
-            sideToolbar    = $('#sideToolbar'),
+        var homeScroll = $('#home').offset().top - 40,
+            docScroll = $(document).scrollTop(),
+            openButton = $('#open-button'),
+            sideToolbar = $('#sideToolbar'),
             sideToolbarTop = $('.main-header').outerHeight(),
-            scrollPercent  = tools.getScrollPercent(),
-            toUpDown       = $("#toUpDown"),
-            toUpDownI      = $("#toUpDownI"),
-            toUpDownSpan   = $('.toUpDownSpan');
+            scrollPercent = tools.getScrollPercent(),
+            toUpDown = $("#toUpDown"),
+            toUpDownI = $("#toUpDownI"),
+            toUpDownSpan = $('.toUpDownSpan');
 
         // 设置底部滚动条
         progressBar.setProgress(scrollPercent);
@@ -453,11 +468,11 @@ function Base() {
 
         // 设置头部底部按钮
         if (homeScroll <= docScroll) {
-            toUpDownI.rotate({animateTo:0});
+            toUpDownI.rotate({animateTo: 0});
             toUpDown.attr('data', 'up');
             toUpDownSpan.text('返回顶部');
         } else {
-            toUpDownI.rotate({animateTo:-180});
+            toUpDownI.rotate({animateTo: -180});
             toUpDown.attr('data', 'down');
             toUpDownSpan.text('跳至底部');
         }
@@ -491,17 +506,17 @@ function Base() {
     /**
      * 屏幕大小变化处理
      */
-    this.resizeMonitor = function() {
+    this.resizeMonitor = function () {
         var bodyWidth = parseFloat(document.body.clientWidth);
         caihuaJs.setDomHomePosition();
 
         // 设置目录插件左右位置
         if ($('#sideToolbar').length > 0) {
             var mainContentWidth = $('#mainContent').outerWidth(true);
-            var listWidth        = $('#sideCatalog').outerWidth(true);
+            var listWidth = $('#sideCatalog').outerWidth(true);
             listWidth = listWidth > 220 ? listWidth : 242;
-            var bothWidth        = (bodyWidth - mainContentWidth) / 2;
-            var rightPx          = bothWidth - listWidth - 50;
+            var bothWidth = (bodyWidth - mainContentWidth) / 2;
+            var rightPx = bothWidth - listWidth - 50;
 
             $('#sideCatalog').css('right', (rightPx > 0 ? rightPx : 0) + 'px');
             if (bothWidth > listWidth + 50 && bodyWidth > 1230) {
@@ -515,23 +530,29 @@ function Base() {
     /**
      * 右下角菜单事件处理
      */
-    this.rightMenuMous = function(parentObject, subObject) {
+    this.rightMenuMous = function (parentObject, subObject) {
         $(parentObject).on({
-            mouseover : function(){
+            mouseover: function () {
                 if (subObject == '.rightBuryitSpan') {
                     // 鼠标移入，更新踩值
                     var str = $('#bury_count').text();
-                    if ($(subObject).text() != str) {$(parentObject).attr('clickflg', 'false');$(subObject).text(str);}
+                    if ($(subObject).text() != str) {
+                        $(parentObject).attr('clickflg', 'false');
+                        $(subObject).text(str);
+                    }
                 }
 
                 if (subObject == '.rightDiggitSpan') {
                     // 鼠标移入，更新顶值
                     var str = $('#digg_count').text();
-                    if ($(subObject).text() != str) {$(parentObject).attr('clickflg', 'false');$(subObject).text(str);}
+                    if ($(subObject).text() != str) {
+                        $(parentObject).attr('clickflg', 'false');
+                        $(subObject).text(str);
+                    }
                 }
                 $(subObject).show();
             },
-            mouseout : function(){
+            mouseout: function () {
                 $(subObject).hide();
             },
             click: function () {
@@ -558,7 +579,7 @@ function Base() {
                     // 点击滚动
                     var ac = $(this).attr('data');
                     if (ac == 'down') {
-                        var docHeight    = $(document).height();
+                        var docHeight = $(document).height();
                         var windowHeight = $(window).height();
                         tools.actScroll(docHeight - windowHeight, 2000)
                     } else {
@@ -566,17 +587,17 @@ function Base() {
                     }
                 }
             }
-        }) ;
+        });
     };
 
     /**
      * 添加页脚
      */
-    this.addFooter = function() {
-        var pvHtml =  '<i class="iconfont icon-odps-data cnzz" style="position: relative;top: 2px;left: 3px;cursor: pointer;"></i>';
+    this.addFooter = function () {
+        var pvHtml = '<i class="iconfont icon-odps-data cnzz" style="position: relative;top: 2px;left: 3px;cursor: pointer;"></i>';
         // 请去 AmazingCounters.com 配置自己的，谢谢！！
-        pvHtml += '<div><span id="amazingStatSpan">你是第<span id="amazingStat" style=""><img border="0" src="http://cc.amazingcounters.com/counter.php?i=3230757&c=9692584" s="AmazingCounters.com" style="opacity: 0.5;margin-left: 7px;cursor: pointer;max-width: 72%;vertical-align: middle;height: 15px;margin-top: -2px;"></span>位访客！<span id=\'blogRunTimeSpan\'></span><span class=\'my-face\'>ღゝ◡╹)ノ♡</span></span></div>';
-        pvHtml += '<div>【'+window.cnblogsConfig.bottomText.left+'<span id="footerTextIcon">❤️</span>'+window.cnblogsConfig.bottomText.right+'】</div>';
+        pvHtml += '<span id="amazingStatSpan"><span id="amazingStat" style=""><img border="0" src="http://cc.amazingcounters.com/counter.php?i=3230757&c=9692584" s="AmazingCounters.com" style="opacity: 0.5;margin-left: 7px;cursor: pointer;max-width: 72%;vertical-align: middle;height: 15px;margin-top: -2px;"></span><span id=\'blogRunTimeSpan\'></span><span class=\'my-face\'>ღゝ◡╹)ノ♡</span></span>';
+        pvHtml += '<div>【' + window.cnblogsConfig.bottomText.left + '<span id="footerTextIcon">❤️</span>' + window.cnblogsConfig.bottomText.right + '】</div>';
         // pvHtml += '<div>【❤️ 认清了生活的真相后还依然热爱它 ❤️】</div>';
         pvHtml += "<div><span id='blogRunTimeSpan'></span><span class='my-face'>ღゝ◡╹)ノ♡</span></div>";
         pvHtml += '<div id="cnzzInfo"></div>';
@@ -586,46 +607,49 @@ function Base() {
         //     setTheme();
         // }
 
-        window.setInterval( setRunTime, 500 );
+        window.setInterval(setRunTime, 500);
         setBlogroll();
-        timeIds.setCnzzTId    = window.setInterval( setCnzz, 1000 );
-        timeIds.setAmazingTId = window.setInterval( setAmazing, 1000 );
+        timeIds.setCnzzTId = window.setInterval(setCnzz, 1000);
+        timeIds.setAmazingTId = window.setInterval(setAmazing, 1000);
 
         function setRunTime() {
             var str = window.cnblogsConfig.blogStartDate;
             str = str ? str : '2018-04-08';
             var runDate = tools.getRunDate(str);
-            $('#blogRunTimeSpan').text('This blog has running : '+runDate.daysold+' d '+runDate.hrsold+' h '+runDate.minsold+' m '+runDate.seconds+' s');
+            $('#blogRunTimeSpan').text('This blog has running : ' + runDate.daysold + ' d ' + runDate.hrsold + ' h ' + runDate.minsold + ' m ' + runDate.seconds + ' s');
         }
+
         function setBlogroll() {
             if (window.cnblogsConfig.bottomBlogroll.length > 0) {
-                var blogrollArr  = window.cnblogsConfig.bottomBlogroll;
+                var blogrollArr = window.cnblogsConfig.bottomBlogroll;
                 var blogrollHtml = '友情链接：';
-                for(var i = 0; i < blogrollArr.length; i++) {
-                    blogrollHtml += '<a href="'+(blogrollArr[i][1])+'" target="_blank">'+(blogrollArr[i][0])+'</a>';
-                    if (i < blogrollArr.length-1) blogrollHtml += '<span style="margin: 0 3px;">/</span>';
+                for (var i = 0; i < blogrollArr.length; i++) {
+                    blogrollHtml += '<a href="' + (blogrollArr[i][1]) + '" target="_blank">' + (blogrollArr[i][0]) + '</a>';
+                    if (i < blogrollArr.length - 1) blogrollHtml += '<span style="margin: 0 3px;">/</span>';
                 }
                 $('#blogrollInfo').html(blogrollHtml);
             }
         }
+
         function setCnzz() {
             // 请去 CNZZ 配置自己的，谢谢！！
             var cnzzStat = $('.id_cnzz_stat_icon a');
             if (cnzzStat.length > 0) {
                 var cnzzInfo = [];
-                var cnzzArr  = $(cnzzStat[1]).text().split('|');
+                var cnzzArr = $(cnzzStat[1]).text().split('|');
                 $.each(cnzzArr, function (i) {
                     var str = $.trim(cnzzArr[i]);
                     if (str != '') {
-                        str = str.replace('今日','Today').replace('昨日','Yesterday').replace('[',':').replace(']','');
+                        str = str.replace('今日', 'Today').replace('昨日', 'Yesterday').replace('[', ':').replace(']', '');
                         cnzzInfo.push(str)
                     }
                 });
-                cnzzInfo.push($(cnzzStat[2]).text().replace('当前在线','Online').replace('[',':').replace(']',''));
+                cnzzInfo.push($(cnzzStat[2]).text().replace('当前在线', 'Online').replace('[', ':').replace(']', ''));
                 $('#cnzzInfo').text(cnzzInfo.join(' | '));
                 caihuaJs.clearIntervalTimeId(timeIds.setCnzzTId);
             }
         }
+
         function setAmazing() {
             // 请去 AmazingCounters.com 配置自己的，谢谢！！
             if ($('#amazingStat').length > 0) {
@@ -633,9 +657,10 @@ function Base() {
                 caihuaJs.clearIntervalTimeId(timeIds.setAmazingTId);
             }
         }
+
         function setTheme() {
             $('#footer').prepend('<div class="footer-image"></div>');
-            setInterval(function(){
+            setInterval(function () {
                 var footer = $('#footer');
                 var themeHtml = '<p id="ThemeAuthors" style="color: #444;z-index: 999;">- Theme Authors：<a href="https://www.cnblogs.com/icaihua/" target="_blank" style="color:#444;">菜花君°</a> -</p></div>';
                 if ($('#ThemeAuthors').length == 0) {
@@ -643,27 +668,27 @@ function Base() {
                 } else {
                     $('#ThemeAuthors').show().css('visibility', 'visible');
                 }
-            },3000);
+            }, 3000);
         }
     };
 
     /**
      * 设置菜单数据
      */
-    this.setMenuData = function() {
-        var introduceHtml    = $('#profile_block').html(),        // 个人信息
-            sidebar          = $('#sidebar_recentposts ul li'),   // 最新随笔
-            toptags          = $('#sidebar_toptags ul li'),       // 我的标签
-            sbClassify       = $('#sidebar_postcategory ul li'),  // 随笔分类
-            sbRecord         = $('#sidebar_postarchive ul li'),   // 随笔档案
-            sbTopview        = $('#TopViewPostsBlock ul li'),     // 阅读排行
-            topDiggPosts     = $('#TopDiggPostsBlock ul li'),     // 推荐排行
-            menuIntroduce    = $('#introduce'),
-            menuSidebar      = $('#sb-sidebarRecentposts'),
-            menuToptags      = $('#sb-toptags'),
-            menuClassify     = $('#sb-classify'),
-            menuRecord       = $('#sb-record'),
-            menuTopview      = $('#sb-topview'),
+    this.setMenuData = function () {
+        var introduceHtml = $('#profile_block').html(),        // 个人信息
+            sidebar = $('#sidebar_recentposts ul li'),   // 最新随笔
+            toptags = $('#sidebar_toptags ul li'),       // 我的标签
+            sbClassify = $('#sidebar_postcategory ul li'),  // 随笔分类
+            sbRecord = $('#sidebar_postarchive ul li'),   // 随笔档案
+            sbTopview = $('#TopViewPostsBlock ul li'),     // 阅读排行
+            topDiggPosts = $('#TopDiggPostsBlock ul li'),     // 推荐排行
+            menuIntroduce = $('#introduce'),
+            menuSidebar = $('#sb-sidebarRecentposts'),
+            menuToptags = $('#sb-toptags'),
+            menuClassify = $('#sb-classify'),
+            menuRecord = $('#sb-record'),
+            menuTopview = $('#sb-topview'),
             menuTopDiggPosts = $('#sb-topDiggPosts');
 
         // 添加个人信息
@@ -697,24 +722,24 @@ function Base() {
         // 清除定时器
         if (
             sidebar.length > 0
-             && toptags.length > 0
-             && sbClassify.length > 0
-             && sbRecord.length > 0
-             && sbTopview.length > 0
-             && topDiggPosts.length > 0
+            && toptags.length > 0
+            && sbClassify.length > 0
+            && sbRecord.length > 0
+            && sbTopview.length > 0
+            && topDiggPosts.length > 0
         ) {
             caihuaJs.clearIntervalTimeId(timeIds.setMenuDataTId);
         }
 
         function getMenuData(obj, icon) {
             var html = '<div><ul>';
-            var ret  = /^[1-9]+[0-9]*$/;
+            var ret = /^[1-9]+[0-9]*$/;
             obj.each(function (i) {
                 var o = $($(obj[i]).html());
                 var textArr = o.text().split('.');
-                if (ret.test(textArr[0])) textArr.splice(0,1);
+                if (ret.test(textArr[0])) textArr.splice(0, 1);
                 var text = $.trim(textArr.join('.'));
-                var iconHtml = '<span class="iconfont '+icon+'" style="color: #888;font-size: 14px;margin-right: 5px;"></span>';
+                var iconHtml = '<span class="iconfont ' + icon + '" style="color: #888;font-size: 14px;margin-right: 5px;"></span>';
                 o.html(iconHtml + text);
                 html += '<li>' + o.prop("outerHTML") + '</li>';
             });
@@ -726,7 +751,7 @@ function Base() {
     /**
      * 添加主页右下角菜单
      */
-    this.addHomeRightMenu = function() {
+    this.addHomeRightMenu = function () {
         var rightMenu = $('#rightMenu');
         if (rightMenu.length > 0) {
 
@@ -757,7 +782,7 @@ function Base() {
     /**
      * 添加非主页右下角菜单
      */
-    this.addNotHomeRightMenu = function() {
+    this.addNotHomeRightMenu = function () {
         var rightMenu = $('#rightMenu');
         if (rightMenu.length > 0 && $('#div_digg').length > 0) {
 
