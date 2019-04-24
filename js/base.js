@@ -596,7 +596,7 @@ function Base() {
     this.addFooter = function () {
         var pvHtml = '<i class="iconfont icon-odps-data cnzz" style="position: relative;top: 2px;left: 3px;cursor: pointer;"></i>';
         // 请去 AmazingCounters.com 配置自己的，谢谢！！
-        pvHtml += '<span id="amazingStatSpan"><span id="amazingStat" style=""><img border="0" src="http://cc.amazingcounters.com/counter.php?i=3230757&c=9692584" s="AmazingCounters.com" style="opacity: 0.5;margin-left: 7px;cursor: pointer;max-width: 72%;vertical-align: middle;height: 15px;margin-top: -2px;"></span><span id=\'blogRunTimeSpan\'></span><span class=\'my-face\'>ღゝ◡╹)ノ♡</span></span>';
+        pvHtml += '<span id="amazingStatSpan"><span id="amazingStat" style=""><img border="0" src="http://cc.amazingcounters.com/counter.php?i=3230757&c=9692584" s="AmazingCounters.com" style="opacity: 0.5;margin-left: 7px;cursor: pointer;max-width: 72%;vertical-align: middle;height: 15px;margin-top: -2px;"></span><span id=\'blogRunTimeSpan\'></span></span>';
         pvHtml += '<div>【' + window.cnblogsConfig.bottomText.left + '<span id="footerTextIcon">❤️</span>' + window.cnblogsConfig.bottomText.right + '】</div>';
         // pvHtml += '<div>【❤️ 认清了生活的真相后还依然热爱它 ❤️】</div>';
         pvHtml += "<div><span id='blogRunTimeSpan'></span><span class='my-face'>ღゝ◡╹)ノ♡</span></div>";
