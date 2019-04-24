@@ -131,7 +131,7 @@ function Base() {
         var hidden,
             visibilityChange,
             timer;
-        
+
         if (typeof document.hidden !== "undefined") {
             hidden = "hidden";
             visibilityChange = "visibilitychange";
@@ -575,16 +575,16 @@ function Base() {
     this.addFooter = function() {
         var pvHtml =  '<i class="iconfont icon-odps-data cnzz" style="position: relative;top: 2px;left: 3px;cursor: pointer;"></i>';
         // 请去 AmazingCounters.com 配置自己的，谢谢！！
-        pvHtml += '<span id="amazingStatSpan"><span id="amazingStat" style=""><img border="0" src="http://cc.amazingcounters.com/counter.php?i=3226342&c=9679339" s="AmazingCounters.com" style="opacity: 0.5;margin-left: 7px;cursor: pointer;max-width: 72%;vertical-align: middle;height: 15px;margin-top: -2px;"></span></span>';
+        pvHtml += '<div><span id="amazingStatSpan">你是第<span id="amazingStat" style=""><img border="0" src="http://cc.amazingcounters.com/counter.php?i=3230757&c=9692584" s="AmazingCounters.com" style="opacity: 0.5;margin-left: 7px;cursor: pointer;max-width: 72%;vertical-align: middle;height: 15px;margin-top: -2px;"></span>位访客！<span id=\'blogRunTimeSpan\'></span><span class=\'my-face\'>ღゝ◡╹)ノ♡</span></span></div>';
         pvHtml += '<div>【'+window.cnblogsConfig.bottomText.left+'<span id="footerTextIcon">❤️</span>'+window.cnblogsConfig.bottomText.right+'】</div>';
-        pvHtml += '<div>【❤️ 认清了生活的真相后还依然热爱它 ❤️】</div>';
+        // pvHtml += '<div>【❤️ 认清了生活的真相后还依然热爱它 ❤️】</div>';
         pvHtml += "<div><span id='blogRunTimeSpan'></span><span class='my-face'>ღゝ◡╹)ノ♡</span></div>";
         pvHtml += '<div id="cnzzInfo"></div>';
         $('#footer').append(pvHtml).prepend('<div class="footer-image"></div>');
 
-        if (window.location.href.search("www.cnblogs.com/icaihua") == -1 ) {
-            setTheme();
-        }
+        // if (window.location.href.search("www.cnblogs.com/icaihua") == -1 ) {
+        //     setTheme();
+        // }
 
         window.setInterval( setRunTime, 500 );
         setBlogroll();
@@ -593,7 +593,7 @@ function Base() {
 
         function setRunTime() {
             var str = window.cnblogsConfig.blogStartDate;
-            str = str ? str : '2016-11-17';
+            str = str ? str : '2018-04-08';
             var runDate = tools.getRunDate(str);
             $('#blogRunTimeSpan').text('This blog has running : '+runDate.daysold+' d '+runDate.hrsold+' h '+runDate.minsold+' m '+runDate.seconds+' s');
         }
