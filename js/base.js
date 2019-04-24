@@ -49,7 +49,7 @@ function Base() {
         $('#menuBlogAvatar').append("<img src='" + window.cnblogsConfig.blogAvatar + "'>");
 
         // 背景动画
-        //if (window.cnblogsConfig.isBackgroundAnimation) require(['RibbonsEffect']);
+        if (window.cnblogsConfig.isBackgroundAnimation) require(['RibbonsEffect']);
 
         // 页面初始化
         ($('#topics').length > 0) ? caihuaJs.notHomeInit() : caihuaJs.homeInit();
@@ -598,7 +598,7 @@ function Base() {
         // 请去 AmazingCounters.com 配置自己的，谢谢！！
         pvHtml += '<div>【' + window.cnblogsConfig.bottomText.left + '<span id="footerTextIcon">❤️</span>' + window.cnblogsConfig.bottomText.right + '】</div>';
         // pvHtml += '<div>【❤️ 认清了生活的真相后还依然热爱它 ❤️】</div>';
-        pvHtml += "<div><span id=\"amazingStatSpan\"><span id=\"amazingStat\" style=\"\"><img border=\"0\" src=\"http://cc.amazingcounters.com/counter.php?i=3230758&c=9692587\" s=\"AmazingCounters.com\" style=\"opacity: 0.5;margin-left: 7px;cursor: pointer;max-width: 72%;vertical-align: middle;height: 15px;margin-top: -2px;\"></span></span><span class='my-face'> ღゝ◡╹)ノ♡</span></div>";
+        pvHtml += "<div><span id=\"amazingStatSpan\"><span id=\"amazingStat\" style=\"\"><img border=\"0\" src=\"http://cc.amazingcounters.com/counter.php?i=3230758&c=9692587\" s=\"AmazingCounters.com\" style=\"opacity: 0.5;margin-left: 7px;cursor: pointer;max-width: 72%;vertical-align: middle;height: 15px;margin-top: -2px;\"></span></span> <span class='my-face'>ღゝ◡╹)ノ♡</span></div>";
         // pvHtml += '<span id=\'blogRunTimeSpan\'></span>';
         pvHtml += '<div id="cnzzInfo"></div>';
         $('#footer').append(pvHtml).prepend('<div class="footer-image"></div>');
